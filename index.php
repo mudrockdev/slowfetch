@@ -26,10 +26,16 @@
   $cpu_model = substr($proc_info, 13, strlen($proc_info) - 12);
   echo Ansi::tagsToColors($color_tag . "CPU: " . $cpu_model);
 
+  $output = trim(shell_exec("glxinfo | egrep -i 'device'"), " ");
+  $gpu_name = substr($output, 8, strlen($output) - 8 - 10);
+  echo Ansi::tagsToColors($color_tag . "GPU: " . $gpu_name . "\r\n");
+
+  $output =  str_replace(" ", "\n", ltrim(shell_exec("glxinfo | egrep -i 'memory'")));
+  $gpu_vram = explode("\n", $output)[2];
+  echo Ansi::tagsToColors($color_tag . "VRAM: " . $gpu_vram . "\r\n");
+
   $file = file('/proc/meminfo');
   $meminfo = $file[0];
   $mem_total_in_kb = substr($meminfo, 9, strlen($meminfo) - 9 - 3);
   $total_memory = ((int)$mem_total_in_kb / 1024) / 1024;
   echo Ansi::tagsToColors($color_tag . "RAM: " . substr((string)$total_memory, 0, 5) . " GiB" . "\r\n");
-
-  
