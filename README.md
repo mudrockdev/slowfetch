@@ -20,4 +20,4 @@ slowfetch set reset
 
 ## Why did i make this?
 
-I hate myself.
+it was a joke between my friends
